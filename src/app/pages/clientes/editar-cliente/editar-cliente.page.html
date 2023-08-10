@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/clientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form1" *ngIf="!isLoading">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Datos del Cliente</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- NOMBRE -->
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="nombre" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- APELLIDO -->
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">Apellido</ion-label>
+                <ion-input type="text" autocomplete autocorrect formControlName="apellido" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- TELEFONO -->
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">Teléfono</ion-label>
+                <ion-input type="number" formControlName="telefono" autocorrect required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!form1.get('telefono').valid && form1.get('telefono').touched">
+            <ion-col size-sm="6" offset-sm="3">
+              <ion-item lines="none">
+                <p>El teléfono debe tener entre 6 y 9 caracteres</p>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- Email -->
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="email" autocorrect formControlName="email"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+           <!-- RUC -->
+           <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">RUC</ion-label>
+                <ion-input type="number" formControlName="ruc" autocorrect></ion-input>
+              </ion-item>
+            </ion-col>
+         </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </form>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Dirección</ion-label>
+            <ion-toggle [(ngModel)]="direccion"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <form [formGroup]="form2" *ngIf="direccion && !isLoading">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Dirección del Cliente</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+           <!-- DIRECCION -->
+           <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label position="floating">Dirección</ion-label>
+                <ion-input type="text" autocorrect formControlName="direccion" required></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <!-- DISTRITO -->
+          <ion-row>
+            <ion-col size-sm="6" offset-sm="3" size-md="8" offset-md="2">
+              <ion-item>
+                <ion-label>Distrito</ion-label>
+                <ion-select placeholder="Seleccionar" formControlName="distrito" required cancelText="Cancelar" okText="Aceptar">
+                  <ion-select-option *ngFor="let d of distritos" value={{d.value}}>{{d.nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card> 
+  </form>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Creado: {{ item?.creado | date:'dd/MM/yyyy hh:mm a'}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Modificado: {{ item?.modificado | date:'dd/MM/yyyy hh:mm a'}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="4">
+    </ion-col>
+    <ion-col size="4">
+      <ion-button color="danger" fill="outline" [routerLink]="['/clientes']">Cancelar</ion-button>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button color="primary" (click)="onUpdateItem()" [disabled]="!form1.valid" *ngIf="!isLoading">Guardar</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

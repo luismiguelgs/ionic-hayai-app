@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "lavanderia-pwa": {
+      "hosting": {
+        "app": [
+          "lavanderia-pwa"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "lavanderia-pwa"
+  }
+}

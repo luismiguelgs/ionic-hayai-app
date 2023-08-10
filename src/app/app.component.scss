@@ -1,0 +1,16 @@
+ion-menu{
+    max-width: 280px;
+}
+.active{
+    --ion-text-color: var(--ion-color-primary);
+    --background: var(--ion-color-primary-contrast) !important;
+    ion-icon{
+        color: var(--ion-color-primary);
+    }
+}
+.active-parent{
+    font-weight: 500;
+}
+.sub-item{
+    padding-left: 10px;
+}

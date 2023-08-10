@@ -1,3 +1,45 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content" when="(min-width: 1020px)">
+    <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>
+            Lavanderia Admin
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+          <ion-list>
+            <div *ngFor="let p of appPages">
+              <ion-menu-toggle auto-hide="false" *ngIf="p.url">
+                <ion-item lines="none" [routerLink]="[p.url]" routerLinkActive="active">
+                  <ion-icon [name]="p.icon" slot="start"></ion-icon>
+                  <ion-label>{{p.titulo}}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+              <ion-item button *ngIf="p.children?.length > 0" (click)="p.open=!p.open" [class.active-parent]="p.open" detail="false" lines="none">
+                <ion-icon slot="start" name="arrow-forward" *ngIf="!p.open"></ion-icon>
+                <ion-icon slot="start" name="arrow-down" *ngIf="p.open"></ion-icon>
+                <ion-label>{{p.titulo}}</ion-label>
+              </ion-item>
+              <ion-list *ngIf="p.open">
+                <ion-menu-toggle auto-hide="false">
+                  <ion-item class="sub-item" *ngFor="let sub of p.children" lines="none" [routerLink]="[sub.url]" routerLinkActive="active">
+                    <ion-icon [name]="sub.icon" slot="start"></ion-icon>
+                    <ion-label>{{sub.titulo}}</ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+              </ion-list>
+            </div>
+            <ion-menu-toggle auto-hide="false">
+              <ion-item lines="none" (click)="onLogout()" button>
+                <ion-icon name="exit" slot="start"></ion-icon>
+                <ion-label>Salir</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content" main></ion-router-outlet>
+  </ion-split-pane>   
 </ion-app>

@@ -1,0 +1,21 @@
+<ion-card>
+  <ion-card-header color="secondary">
+    <ion-card-title>Histórico</ion-card-title>
+  </ion-card-header>
+  <ion-card-content class="ion-no-padding">
+    <ion-list *ngIf="items">
+      <ion-item *ngIf=!abierto>
+        <ion-button fill="outline" color="dark" (click)="abrirCaja()">Abrir Caja</ion-button>
+      </ion-item>
+      <ion-item *ngFor="let i of items" button (click)="getCaja(i)" lines="full">
+        <ion-label slot="start">
+          <h5>{{ i?.id }}</h5>
+          <h6>{{ i?.fechaAbierta | date: 'HH:mm' }} - {{ i?.fechaCerrada | date: 'HH:mm' }}</h6>
+        </ion-label>
+        <ion-label>
+          S/{{ i?.saldo | number:'1.2-2' }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

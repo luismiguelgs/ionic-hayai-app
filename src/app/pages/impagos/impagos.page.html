@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Inpagos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+<ion-grid>
+  <ion-row>
+    <ion-col size="5">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Filtros</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <h2>Filtrar Impagos</h2>
+          <ion-item lines="none">
+            <ion-label>Fecha de Inicio</ion-label>
+            <ion-datetime displayFormat="DD MM YYYY" placeholder="Seleccionar Fecha" [(ngModel)]="fechaI"></ion-datetime>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Fecha Final</ion-label>
+            <ion-datetime displayFormat="DD MM YYYY" placeholder="Seleccionar Fecha" [(ngModel)]="fechaF"></ion-datetime>
+          </ion-item>
+          <h2>Buscar Impagos</h2>
+          <ion-searchbar (ionInput)="filterList($event)" placeholder="Buscar"></ion-searchbar>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="7">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Histórico de Impagos</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+              <app-item-impago [item]="item" *ngFor="let item of goalItems"></app-item-impago>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

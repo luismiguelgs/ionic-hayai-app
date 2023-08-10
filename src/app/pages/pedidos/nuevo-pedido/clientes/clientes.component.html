@@ -1,0 +1,59 @@
+<ion-card *ngIf="buscar"> 
+  <ion-card-header>
+    <ion-card-title><ion-icon name="person-circle-outline"></ion-icon> Buscar Cliente</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-searchbar (ionInput)="filterList($event)" placeholder="Buscar"></ion-searchbar>
+    <ion-list>
+      <ion-item *ngFor="let item of goalItems">
+        <ion-label>
+          <h5>{{ item.nombre }} {{ item.apellido }}</h5>
+          <p>{{ item.telefono }}</p>
+        </ion-label>
+        <ion-button fill="clear" (click)="addItem(item)"><ion-icon name="add-circle-outline" slot="icon-only"></ion-icon></ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf="!buscar">
+  <ion-card-header>
+    <ion-card-title>{{ itemSelect.nombre }} {{ itemSelect.apellido }}</ion-card-title>
+    <ion-card-subtitle>{{ itemSelect.telefono }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-button expand="block" fill="outline" color="dark" (click)="buscar=true">Cambiar Cliente</ion-button>
+  </ion-card-content>
+</ion-card>
+<ion-card *ngIf="!buscar">
+  <ion-card-header>
+    <ion-card-title><ion-icon name="bicycle-outline"></ion-icon> Logística</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item lines="none">
+      <ion-icon name="enter-outline" slot="start"></ion-icon>
+      <ion-label>Recogida</ion-label>
+    </ion-item>
+    <ion-item lines="none" class="ion-text-end">
+      <ion-icon name="home-outline" size="small" slot="end"></ion-icon>
+      <ion-label>En local</ion-label>
+    </ion-item>
+    <ion-item lines="none" class="ion-text-end"> 
+      <ion-icon name="calendar-outline" size="small" slot="end"></ion-icon>
+    <ion-label>{{ fechaRecojo | date:'dd/MM/yyyy hh:mm a'}}</ion-label>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-icon name="exit-outline" slot="start"></ion-icon>
+      <ion-label>Entrega</ion-label>
+    </ion-item>
+    <ion-item lines="none" class="ion-text-end">
+      <ion-icon name="home-outline" size="small" slot="end"></ion-icon>
+      <ion-label>En local</ion-label>
+    </ion-item>
+    <ion-item lines="none" class="ion-text-end">
+      <ion-icon name="calendar-outline" size="small" slot="end"></ion-icon>
+      <ion-label>{{ fechaEntrega | date:'dd/MM/yyyy hh:mm a'}}</ion-label>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+

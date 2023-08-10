@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="nuevoItem=true">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-grid>
+    <ion-searchbar (ionInput)="filterList($event)" placeholder="Buscar"></ion-searchbar>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="2">Tipo</ion-col>
+      <ion-col size="4">Nombre</ion-col>
+      <ion-col size="1">Unidad</ion-col>
+      <ion-col size="2">Tiempo de proceso</ion-col>
+      <ion-col size="1">Precio</ion-col>
+      <ion-col size="2">Acciones</ion-col>
+    </ion-row>
+    <app-nuevo-producto *ngIf="nuevoItem" (cerrar)="cerrarNuevo($event)"></app-nuevo-producto>
+    <ion-col size="12">
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of goalItems; index as i;" #slidingItem>
+          <app-editar-producto [item]="item" [slidingItem]="slidingItem"></app-editar-producto>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-col>
+  </ion-grid>
+</ion-content>

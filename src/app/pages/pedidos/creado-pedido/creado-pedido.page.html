@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="pedidos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Pedido Creado</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <h4>¡El pedido se ha creado con éxito!</h4>
+        <p>
+          Aquí tienes el ticket del pedido <strong>{{ itemId }}</strong> que puedes imprimir para tu cliente.
+           Recuerda que si necesita la factura de este pedido debe enviar un email con sus datos de facturación a:
+            abutillon.losolivos@mrjeffapp.com
+        </p>
+      </ion-col>
+      <ion-col size="6">
+        <h4>Ticket del pedido - <span>{{ itemId }}</span></h4>
+        <div class="ticket-card" *ngIf="item" id="print-section">
+          <ion-button color="dark" (click)="onPrintInvoice()" expand="full">
+            <ion-icon name="print-outline" slot="start"></ion-icon>Imprimir Ticket
+          </ion-button>
+          <div data-v-7e2d4cec="" class="ticket-column">
+            <div data-v-7e2d4cec="" class="ticket-row order-data">
+              <div data-v-7e2d4cec="" class="ticket-column">
+                <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Fecha:</strong>31-07-2020</span> 
+                <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Pedido puntual:</strong> {{itemId}}</span>
+              </div>
+            </div>
+            <span data-v-7e2d4cec="">
+              <strong data-v-7e2d4cec="">Mr Jeff</strong></span> 
+              <span data-v-7e2d4cec="">Abutillón - Los Olivos</span> 
+              <span data-v-7e2d4cec="">Los Castaños 800, Los Olivos 15301, Perú 800</span> 
+              <span data-v-7e2d4cec="">15301, Peru</span> 
+              <span data-v-7e2d4cec="">+51998150289</span>
+          </div>
+          <div data-v-7e2d4cec="" class="ticket-column">
+            <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Cliente:</strong></span> 
+            <span data-v-7e2d4cec="">{{ item.nombreCliente }}</span> <span data-v-7e2d4cec=""></span> 
+            <span data-v-7e2d4cec="">{{ item.telefonoCliente }}</span> <!---->
+          </div>
+          <div data-v-7e2d4cec="" class="ticket-column">
+            <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Dirección de facturación:</strong></span> 
+            <span data-v-7e2d4cec="">Los Castaños 800, Los Olivos 15301, Perú 800</span> 
+            <span data-v-7e2d4cec="">15301, Peru</span> 
+            <span data-v-7e2d4cec="">Teléfono:+51998150289</span>
+          </div>
+          <div data-v-7e2d4cec="" class="ticket-row address-data">
+            <div data-v-7e2d4cec="" class="ticket-column">
+              <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Recogida:</strong></span> 
+              <span data-v-7e2d4cec="">En local</span> 
+              <span data-v-7e2d4cec="">{{ item.fechaRecojo |date:'dd/MM/yyyy hh:mm a' }}</span>
+            </div> 
+            <div data-v-7e2d4cec="" class="ticket-column"><span data-v-7e2d4cec="">
+              <strong data-v-7e2d4cec="">Entrega:</strong></span> 
+              <span data-v-7e2d4cec="">En local</span> 
+              <span data-v-7e2d4cec="">{{ item.fechaEntrega |date:'dd/MM/yyyy hh:mm a' }}</span>
+            </div>
+          </div>
+          <div data-v-7e2d4cec="" class="ticket-row"><div data-v-7e2d4cec="" class="ticket-column">
+            <table data-v-7e2d4cec="" class="ticket-table" *ngIf="itemDetalle">
+              <tr data-v-7e2d4cec="">
+                <th data-v-7e2d4cec="">Producto:</th>
+                <th data-v-7e2d4cec="">Cantidad:</th>
+                <th data-v-7e2d4cec="">Precio:</th>
+              </tr> 
+              <tr data-v-7e2d4cec="" *ngFor="let d of itemDetalle">
+                <td data-v-7e2d4cec="">{{ d.nombreProducto }}</td> 
+                <td data-v-7e2d4cec="">{{ d.cantidad }}</td> 
+                <td data-v-7e2d4cec="">S/{{ d.precio | number:'1.2-2' }}</td>
+              </tr> 
+              <tr data-v-7e2d4cec="">
+                <td data-v-7e2d4cec=""></td> 
+                <td data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Envío:</strong></td> 
+                <td data-v-7e2d4cec="">S/{{ 0 | number:'1.2-2' }}</td>
+              </tr> 
+              <tr data-v-7e2d4cec="">
+                <td data-v-7e2d4cec=""></td> 
+                <td data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Descuento:</strong></td> 
+                <td data-v-7e2d4cec="">S/{{ 0 | number:'1.2-2' }}</td>
+              </tr>
+              <tr data-v-7e2d4cec="">
+                <td data-v-7e2d4cec=""></td>
+                <td data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Impuesto 18%:</strong></td>
+                <td data-v-7e2d4cec="">S/{{ item.total - item.total/1.18 | number:'1.2-2' }}</td>
+              </tr> 
+              <tr data-v-7e2d4cec="">
+                <td data-v-7e2d4cec=""></td> 
+                <td data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Total:</strong></td>
+                <td data-v-7e2d4cec="">S/{{ item.total | number:'1.2-2' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div data-v-7e2d4cec="" class="ticket-row">
+          <div data-v-7e2d4cec="" class="ticket-column">
+            <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Canal de venta:</strong></span> 
+            <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Método de pago:</strong> 
+              <span data-v-7e2d4cec="">{{ item.metodoPago }}</span></span> 
+              <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Estado del pago:</strong> 
+              <span data-v-7e2d4cec="">{{ item.estado }}</span></span> 
+              <span data-v-7e2d4cec=""><strong data-v-7e2d4cec="">Cantidad pagada:</strong> 
+              <span data-v-7e2d4cec="">S/{{ item.pago | number:'1.2-2' }}</span></span>
+            </div>
+          </div>    
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

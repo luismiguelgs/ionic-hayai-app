@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pedidos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+<ion-grid>
+  <ion-row>
+    <ion-col size="5">
+     <app-productos (selItem)="addCartItem($event)" *ngIf="!clientes"></app-productos>
+     <app-clientes (selItem)="addCustomer($event)" *ngIf="clientes"></app-clientes>
+    </ion-col>
+    <ion-col size="7" class="no-padding">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title><ion-icon name="basket-outline"></ion-icon> Contenido del Pedido</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list *ngFor="let p of cart">
+            <ion-item>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="9">
+                    <ion-label>{{ p.nombreProducto }}</ion-label>
+                  </ion-col>
+                  <ion-col size="3" class="ion-text-end">
+                    <ion-label>S/ {{ p.cantidad * p.precio |number: '1.2-2'}}</ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-text-center ion-align-items-center">
+                  <ion-col size="3">
+                    <ion-label>S/ {{ p.precio |number: '1.2-2'}}</ion-label>
+                  </ion-col>
+                  <ion-col size="2">
+                    <ion-button color="medium" fill="clear" (click)="increaseCartItem(p)">
+                      <ion-icon name="add-circle" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="3">
+                    {{ p.cantidad }}
+                  </ion-col>
+                  <ion-col size="2">
+                    <ion-button color="medium" fill="clear" (click)="decreseCartItem(p)">
+                      <ion-icon name="remove-circle-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="2">
+                    <ion-button color="medium" fill="clear" (click)="editQuant(p)">
+                      <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+          </ion-list>
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="9">
+                  Total:
+                </ion-col>
+                <ion-col size="3" class="ion-text-end">
+                  S/ {{ getTotal() |number: '1.2-2'}}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-row *ngIf="!clientes">
+        <ion-col size="12" >
+          <ion-button expand="full" color="dark" (click)="clientes=true" [disabled]="getTotal() ==0">Crear Pedido</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="clientes">
+        <ion-col size="6">
+          <ion-button expand="full" color="dark" (click)="clientes=false">Volver</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="full" color="dark" (click)="checkout()" [disabled]="getTotal() ==0 || nuevoPedido.idCliente == null">Pagar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>

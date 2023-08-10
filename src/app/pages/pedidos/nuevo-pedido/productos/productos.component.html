@@ -1,0 +1,11 @@
+<h4>Seleccionar Productos</h4>
+<ion-searchbar (ionInput)="filterList($event)" placeholder="Buscar"></ion-searchbar>
+<ion-list>
+  <ion-item *ngFor="let item of goalItems">
+    <ion-label>
+      <h5>{{ item.nombre }}</h5>
+      <p>S/{{ item.precio | number:'1.2-2' }}</p>
+    </ion-label>
+    <ion-button fill="clear" (click)="addItem(item)"><ion-icon name="add-circle-outline" slot="icon-only"></ion-icon></ion-button>
+  </ion-item>
+</ion-list>

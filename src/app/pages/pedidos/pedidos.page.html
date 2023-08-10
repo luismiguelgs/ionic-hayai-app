@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/pedidos/nuevo']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-row class="header-row">
+    <ion-col size="2" size-md="4" size-lg="2" >
+      Pedido
+    </ion-col>
+    <ion-col size="2" tappable (click)="sortBy('nombreCliente')">
+      Usuario
+      <ion-icon name="arrow-down" *ngIf="sortDirection == 1"></ion-icon>
+      <ion-icon name="arrow-up" *ngIf="sortDirection == 2"></ion-icon>
+    </ion-col>
+    <ion-col size="2" class="ion-hide-md-down">
+      Pickup
+    </ion-col>
+    <ion-col size="2">
+      Entrega
+    </ion-col>
+    <ion-col size="2" class="ion-hide-lg-down">
+      Info Adicional
+    </ion-col>
+    <ion-col size="2">
+      Acciones
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let row of pedidos | async" class="data-row">
+    <ion-col size="6" size-md="4" size-lg="2" >
+      <ion-chip *ngIf="row.estado=='PAGADO'" color="success" outline="true">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-label>PAGADO</ion-label>
+      </ion-chip>
+      <ion-chip *ngIf="row.estado=='IMPAGO'" color="warning" outline="true">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <ion-label>NO PAGADO</ion-label>
+      </ion-chip>
+      <ion-chip *ngIf="row.estado=='CANCELADO'" color="danger" outline="true">
+        <ion-icon name="close-outline"></ion-icon>
+        <ion-label>CANCELADO</ion-label>
+      </ion-chip>
+      <p>Cod: {{row.id}}</p>
+      <p>Total:S/{{row.total | number:'1.2-2' }}</p>
+    </ion-col>
+    <ion-col size="2" class="ion-hide-md-down" tappable (click)="sortBy('nombreCliente')">
+      <p><ion-icon name="person-circle-outline"></ion-icon>{{ row.nombreCliente}}</p>
+      <p><ion-icon name="phone-portrait-outline"></ion-icon>{{ row.telefonoCliente}}</p>
+    </ion-col>
+    <ion-col size="2">
+      {{ row.fechaRecojo |date:'dd/MM/yyyy hh:mm a'}}
+    </ion-col>
+    <ion-col size="2">
+      {{ row.fechaEntrega |date:'dd/MM/yyyy hh:mm a'}}
+    </ion-col>
+    <ion-col size="2" class="ion-hide-lg-down">
+      <ion-chip color="secondary">
+        <ion-label>{{ row.proceso }}</ion-label>
+      </ion-chip>
+      <ion-chip color="secondary"> 
+        <ion-label>{{ row.metodoPago }}</ion-label>
+      </ion-chip>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button size="small" (click)="onProcess()" color="secondary" fill="clear">
+        <ion-icon name="open-outline" slot="start"></ion-icon>Procesamiento
+      </ion-button>
+      <ion-button size="small" [routerLink]="['/','pedidos','editar',row.id]" color="secondary" fill="clear">
+        <ion-icon name="create-outline" slot="start"></ion-icon>Modificar
+      </ion-button>
+      <ion-button size="small" [routerLink]="['/','pedidos','creado',row.id]" color="secondary" fill="clear">
+        <ion-icon name="receipt-outline" slot="start"></ion-icon>Ticket
+      </ion-button>
+      <ion-button size="small" (click)="cancelItem(row.id)" [disabled]="row.estado == 'CANCELADO'" color="danger" fill="clear">
+        <ion-icon name="close-outline" slot="start"></ion-icon>Cancelar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

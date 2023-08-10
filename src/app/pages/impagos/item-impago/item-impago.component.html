@@ -1,0 +1,33 @@
+<ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-chip color="danger">
+          <ion-label color="danger">Pago pendiente</ion-label>
+        </ion-chip>
+        <ion-label><ion-icon name="person-circle-outline"></ion-icon> {{item.nombreCliente }}</ion-label>
+        <ion-label><ion-icon name="call-outline"></ion-icon> {{ item.telefonoCliente }}</ion-label>
+        <ion-label><ion-icon name="basket-outline"></ion-icon> {{ item.id }}</ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <p>{{ item.fechaRecojo |date:'dd/MM/yyyy hh:mm a' }}</p>
+        <p>Pago pendiente:</p>
+        <h1>S/{{item.total - item.pago | number:'1.2-2' }}</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngIf="!pagar">
+        <ion-button color="dark" fill="outline" (click)="pagar=true" expand="block" ><ion-icon name="wallet-outline" slot="start"></ion-icon>Pagar</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="pagar">
+      <ion-col>
+        <h1>Gestión del impago</h1>
+        <p>Selecciona un método de pago para resolver el impago de S/{{item.total - item.pago | number:'1.2-2' }}</p>
+        <ion-button color="dark" fill="outline" (click)="updatePay('EFECTIVO')"><ion-icon name="cash-outline" slot="start"></ion-icon>Efectivo</ion-button>
+        <ion-button color="dark" fill="outline" (click)="updatePay('TVP')"><ion-icon name="card-outline" slot="start"></ion-icon>Tarjeta</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+

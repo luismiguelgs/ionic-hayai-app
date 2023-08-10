@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+  <ion-row>
+    <ion-col size="2">
+      <ion-select placeholder="Seleccionar" formControlName="tipo" required cancelText="Cancelar" okText="Aceptar">
+        <ion-select-option *ngFor="let t of tipos" value={{t.value}}>{{t.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="4">
+      <ion-input placeholder="Nombre" type="text" autocomplete autocorrect formControlName="nombre" required></ion-input>
+    </ion-col>
+    <ion-col size="1">
+      <ion-select placeholder="Seleccionar" formControlName="unidad" required cancelText="Cancelar" okText="Aceptar">
+        <ion-select-option *ngFor="let u of unidades" value={{u.value}}>{{u.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="2">
+      <ion-select placeholder="Seleccionar" formControlName="tiempo" required cancelText="Cancelar" okText="Aceptar">
+        <ion-select-option *ngFor="let t of tiempos" value={{t.value}}>{{t.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="1">
+      <ion-input placeholder="Precio" type="number" autocomplete autocorrect formControlName="precio" required></ion-input>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button color="secondary" fill="clear" (click)="onCreate()" [disabled]="!form.valid">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" fill="clear" (click)="onClose()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</form>
